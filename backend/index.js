@@ -1,13 +1,13 @@
-const express = require('express');
-const rootRouter = require('./routes/index');
-const cors = require('cors');
-
+import express from 'express';
+import cors from 'cors';
+import ConnectDB from './config/dbconnection';
+import rootRouter from './routes/index';
 
 const PORT = 3000;
 const app = express();
 
-//TODO: 1. Setup DB Connection 2. Connect to MongoDB
-
+// Connect to MongoDB
+ConnectDB();
 
 // Middlewares:
 app.use(cors());

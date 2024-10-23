@@ -1,9 +1,9 @@
 import { z } from "zod";
-const express = require('express');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
-const JWT_SECRET = require('../config/config');
+import express from 'express';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import User from '../models/userModel.js';
+import { JWT_SECRET } from '../config/config.js';
 
 const userRouter = express.Router();
 
@@ -48,7 +48,7 @@ userRouter.post('/signup', async (req, res) => {
             password: hashedPassword
         });
 
-        const token = jwt.sign({ userId: newUser._id, email: email }, JWT_SECRET);
+        const token = jwt.sign(newUser._id , JWT_SECRET);
 
         return res.status(200).send({
             message: "User created successfully!",
@@ -79,7 +79,7 @@ userRouter.post('/signin', async (req, res) => {
             return res.status(404).send({ Message: "Please enter correct user details." });
         }
 
-        const token = jwt.sign({ userId: userDetails._id, email: email }, JWT_SECRET);
+        const token = jwt.sign(userDetails._id, JWT_SECRET);
 
         return res.status(200).send({
             token: token
