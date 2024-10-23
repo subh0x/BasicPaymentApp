@@ -1,8 +1,10 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/userModel.js';
-import { JWT_SECRET } from '../config/config.js';
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
 
-function authMiddleware(req, res, next) {
+dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET;
+
+async function authMiddleware(req, res, next) {
     try {
         const authHeader = req.headers.authorization;
 
@@ -10,11 +12,10 @@ function authMiddleware(req, res, next) {
             res.status(403).send({ message: "Invalid AuthHeader." });
         }
 
-        const token = authHeader.split('')[1];
+        const token = authHeader.split(' ')[1];
 
         try {
-
-            const decoded = jwt.verify(token, JWT_SECRET);
+            const decoded = await jwt.verify(token, JWT_SECRET);
             req.userId = decoded.userId;
         }
         catch (err) {
