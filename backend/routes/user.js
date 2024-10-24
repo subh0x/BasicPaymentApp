@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel.js');
+const Account = require('../models/accountModel.js');
 const authMiddleware = require('../middlewares/middleware.js');
 
 dotenv.config();
@@ -56,7 +57,15 @@ userRouter.post('/signup', async (req, res) => {
             password: password
         });
 
-        const token = jwt.sign({ userId: newUser._id }, JWT_SECRET);
+        const newUserId = newUser._id;
+
+        // TODO: Handle account creation errors
+        await Account.create({
+            userId: newUserId,
+            balance: (1 + Math.random()*10000) // Initialize users with Random Balance Between 1-10000
+        })
+
+        const token = jwt.sign({ userId: newUserId }, JWT_SECRET);
 
         return res.status(200).send({
             message: "User created successfully!",
@@ -66,7 +75,7 @@ userRouter.post('/signup', async (req, res) => {
 
     }
     catch (err) {
-        return res.status(500).send({ message: err.message });
+        return res.status(500).send({ errorMessage: err.message });
     }
 });
 
@@ -94,12 +103,12 @@ userRouter.post('/signin', async (req, res) => {
 
     }
     catch (err) {
-        return res.status(400).send({ message: err.message });
+        return res.status(400).send({ errorMessage: err.message });
     }
 });
 
 // Update user details route
-userRouter.put("/", authMiddleware, async (req, res) => {
+userRouter.put('/', authMiddleware, async (req, res) => {
     try {
         const validData = userDataUpdateSchema.safeParse(req.body);
 
@@ -114,12 +123,12 @@ userRouter.put("/", authMiddleware, async (req, res) => {
         }
     }
     catch (err) {
-        return res.status(400).send({ errMessage: err.message });
+        return res.status(400).send({ errorMessage: err.message });
     }
 });
 
 // Search user route:
-userRouter.get("/bulk", async (req, res) => {
+userRouter.get('/bulk', async (req, res) => {
     const filter = req.query.filter || "";
     console.log(filter);
     const matchedUsers = await User.find({
