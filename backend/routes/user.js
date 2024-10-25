@@ -127,10 +127,10 @@ userRouter.put('/', authMiddleware, async (req, res) => {
     }
 });
 
-// Search user route:
+// Search user route: //TODO: Add AuthMiddleware
 userRouter.get('/bulk', async (req, res) => {
     const filter = req.query.filter || "";
-    console.log(filter);
+    // console.log(filter);
     const matchedUsers = await User.find({
         $or: [
             { firstname: { $regex: filter, $options: 'i' } },  // Case-insensitive regex
@@ -138,13 +138,13 @@ userRouter.get('/bulk', async (req, res) => {
         ]
     });
     
-    console.log(matchedUsers);
+    // console.log(matchedUsers);
 
     res.send({
         user: matchedUsers.map(user => ({
             email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            firstname: user.firstname,
+            lastname: user.lastname,
             _id: user._id
         }))
     })

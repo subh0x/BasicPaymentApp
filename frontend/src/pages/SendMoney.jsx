@@ -10,12 +10,18 @@ const SendMoney = () => {
           <Heading label={"Send Money"} />
           <div className="my-4 flex items-baseline space-x-2">
             <div className="flex h-12 w-12 justify-center rounded-full bg-green-400">
-              <div className="flex flex-col justify-center text-xl text-white">SG</div>
+              <div className="flex flex-col justify-center text-xl text-white">
+                SG
+              </div>
             </div>
             <div className="py-2 font-semibold">Subhrajit G</div>
           </div>
           <div className="w-full">
-            <InputBox label={"Amount (in Rs.)"} placeholder={"Enter Amount"} />
+            <InputBox
+              label={"Amount (in Rs.)"}
+              placeholder={"Enter Amount"}
+              type={"number"}
+            />
             <div className="pt-4">
               <Button
                 className="w-full bg-green-400"
