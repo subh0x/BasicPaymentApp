@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 async function authMiddleware(req, res, next) {
     try {
         const authHeader = req.headers.authorization;
-
+        // console.log(authHeader);
         if (!authHeader || !authHeader.startsWith("Bearer")) {
             res.status(403).send({ message: "Invalid AuthHeader." });
         }

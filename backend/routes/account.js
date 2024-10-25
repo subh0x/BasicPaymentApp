@@ -31,7 +31,7 @@ accountRouter.get('/balance', authMiddleware, async (req, res) => {
 });
 
 // Transfer route
-accountRouter.get('/transfer', authMiddleware, async (req, res) => {
+accountRouter.post('/transfer', authMiddleware, async (req, res) => {
     try {
         const validData = moneyTransferSchema.safeParse(req.body);
 

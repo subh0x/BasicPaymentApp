@@ -5,12 +5,15 @@ import Heading from "../components/Heading";
 import InputBox from "../components/InputBox";
 import SubHeading from "../components/SubHeading";
 import { BottomWarning } from "../components/BottomWarning";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen justify-center bg-black">
@@ -65,7 +68,7 @@ const Signup = () => {
                 localStorage.setItem("token", response.data.token);
 
                 if (response.data.token) {
-                  window.location = "/dashboard";
+                  navigate("/dashboard");
                 }
               }}
               className="w-full bg-black"

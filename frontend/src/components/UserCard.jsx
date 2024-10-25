@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 
 export default function UserCard({ userData }) {
+  const navigate = useNavigate();
   return (
     <div className="pt-4">
       <div className="flex w-40 flex-col items-center rounded-lg border-2 p-2 px-4 text-center">
@@ -9,8 +11,16 @@ export default function UserCard({ userData }) {
             {userData.firstname[0] + userData.lastname[0]}
           </div>
         </div>
-        <div className="py-2 font-semibold">{userData.firstname + ' ' + userData.lastname[0]}</div>
-        <Button className="w-auto bg-black" label={"Send Money"} />
+        <div className="py-2 font-semibold">
+          {userData.firstname + " " + userData.lastname[0]}
+        </div>
+        <Button
+          onClick={() => {
+            navigate("/send?id=" + userData._id +"&name="+ userData.firstname);
+          }}
+          className="w-auto bg-black"
+          label={"Send Money"}
+        />
       </div>
     </div>
   );
