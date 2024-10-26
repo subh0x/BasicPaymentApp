@@ -55,7 +55,6 @@ const SendMoney = () => {
 
                   //TODO: Alert the user Transaction Successfull if Success
                   navigate("/dashboard");
-                  navigate(0);
                 }}
                 className="w-full bg-green-400"
                 label={"Initiate Transfer"}
